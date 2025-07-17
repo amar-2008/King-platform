@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>تأكيد الدفع - القائد في الكيمياء</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(135deg, #f39c12, #8e44ad);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      color: #fff;
+      padding: 30px;
+      text-align: center;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .box {
+      background: rgba(255,255,255,0.1);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      max-width: 500px;
+      margin: auto;
+    }
+
+    h2 {
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      font-size: 18px;
+      border-radius: 10px;
+      border: none;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 25px;
+      font-size: 18px;
+      background: #2ecc71;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #27ae60;
+    }
+
+    #error {
+      color: #ffb3b3;
+      margin-top: 15px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box">
+    <h2>💳 تأكيد الدفع</h2>
+    <p style="font-size: 18px;">من فضلك أدخل <strong>رقم العملية (المرجعي)</strong> اللي وصلك في رسالة فودافون كاش بعد الدفع.</p>
+
+    <input type="text" id="refInput" placeholder="مثال: 012687632719">
+    <button onclick="checkReference()">تأكيد</button>
+
+    <div id="error">❌ الرقم غير صالح. يجب أن يكون 12 رقمًا.</div>
+  </div>
+
+  <script>
+    function checkReference() {
+      const inputRef = document.getElementById("refInput").value.trim();
+      const errorMsg = document.getElementById("error");
+
+      // تحقق من أن الرقم 12 رقم فقط ومفيهوش حاجة تانية
+      const isValid = /^\d{12}$/.test(inputRef);
+
+      if (isValid) {
+        const studentData = JSON.parse(localStorage.getItem("studentBooking") || "{}");
+        studentData["رقم العملية"] = inputRef;
+        localStorage.setItem("studentBooking", JSON.stringify(studentData));
+
+        window.location.href = "confirm.html";
+      } else {
+        errorMsg.style.display = "block";
+      }
+    }
+  </script>
+
+</body>
+</html>
